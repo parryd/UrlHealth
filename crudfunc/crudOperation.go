@@ -50,15 +50,15 @@ func CheckAllurl(url1 string, crawlTime int, frequency int, failureThreshold int
 
 	i := 1
 	for ; i <= failureThreshold; i++ {
-		fmt.Println("yo", i)
+		//fmt.Println("yo", i)
 		resp, err := client.Do(req)
 		if err != nil {
-			fmt.Println("ao", i)
+			fmt.Println(url1, " is down on ", i, " attempt")
 			urlStat := model.URLStatusModel{URL1: url1, AttemptNo: i, Stat: false}
 			db.Save(&urlStat)
 			//c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "error": err})
 		} else {
-			fmt.Println("bo", i)
+			fmt.Println(url1, " Is Up")
 			urlStat := model.URLStatusModel{URL1: url1, AttemptNo: i, Stat: true}
 			db.Save(&urlStat)
 			defer resp.Body.Close()
